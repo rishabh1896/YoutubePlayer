@@ -6,48 +6,46 @@ import android.util.Log;
 
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+            /*((MyApp) getApplication()).getNetComponent().inject(this);
+            setContentView(R.layout.activity_main);
+            TextView textView = (TextView) findViewById(R.id.text_view1);*/
             YoutubeService service = ServiceFactory.createRetrofitService(YoutubeService.class, YoutubeService.SERVICE_ENDPOINT);
 
             System.out.println("i'm here");
-           /* Observable<YoutubeModel> youtubeData=service.getYoutubeFeeds(Config.YOUTUBE_API_KEY, Config.id, Config.fields, "snippet,statistics");
+          /*  Observable<YoutubeModel> youtubeData=service.getYoutubeFeeds(Config.YOUTUBE_API_KEY, Config.id, Config.fields, "snippet,statistics");
            youtubeData.subscribeOn(Schedulers.newThread())
                    .observeOn(AndroidSchedulers.mainThread())
                    .map(data -> "ID:"+data.getItems().toString())
                    .subscribe(youtubeInfo-> Log.d("Output",youtubeInfo));
-*/
 
-            service.getYoutubeFeeds(Config.YOUTUBE_API_KEY, Config.id, Config.fields, "snippet,statistics")
-                    .subscribeOn(Schedulers.io())
+*/
+            Observable<YoutubeModel> youtubeData =service.getYoutubeFeeds(Config.YOUTUBE_API_KEY, Config.id, Config.fields, "snippet,statistics");
+                   youtubeData.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<YoutubeModel>() {
                         @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
                         public void onNext(YoutubeModel youtubeModel) {
                         List<Item> l=youtubeModel.getItems();
-                            System.out.println(l);
+                            System.out.println("hii"+l.get(0).getId());
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                           Log.d("Output",e.getLocalizedMessage());
+                           Log.d("Output",e.getMessage());
                         }
 
                         @Override
-                        public void onComplete() {
+                        public void onCompleted() {
 
                         }
                     });

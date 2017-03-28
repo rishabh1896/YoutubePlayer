@@ -1,6 +1,6 @@
 package com.example.rishabh.youtubeplayer;
 
-import io.reactivex.Observable;
+import rx.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

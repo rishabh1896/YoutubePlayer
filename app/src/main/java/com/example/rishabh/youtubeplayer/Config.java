@@ -8,7 +8,7 @@ public class Config {
     private Config()
     {
     }
-    public static final String YOUTUBE_API_KEY = "AAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    public static final String YOUTUBE_API_KEY = "AIzaSyDI8SbhjHFmRzIRYGNRW1ngvDDmK4DvSnA";
     public static final String id="KzBa4ZKTVjE";
     public static final String fields="items(id,snippet(channelId,title,categoryId),statistics)";
 
