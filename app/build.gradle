@@ -18,8 +18,23 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "base_url", "\"https://www.googleapis.com/youtube/v3/\""
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".debug"
+            versionNameSuffix "debug"
+            jackOptions {
+                enabled true
+            }
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "youtube_key", "\"YOUR_DEVELOPER_KEY\""
+            buildConfigField "String", "base_url", "\"https://www.googleapis.com/youtube/v3/\""
         }
     }
+
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
